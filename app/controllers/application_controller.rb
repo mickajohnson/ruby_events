@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   def require_login
     unless session[:user_id]
-      redirect_to '/sessions/new'
+      redirect_to '/users/new'
     end
   end
   def current_user
