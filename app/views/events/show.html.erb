@@ -1,0 +1,48 @@
+<a href="/">Events Dashboard</a>
+<h1><%=@event.name%></h1>
+<div class="row">
+  <div class="col-xs-7">
+    <h4>Host: <%=@event.user.first_name%> <%=@event.user.last_name%></h4>
+    <h4>Date: <%=@event.date.strftime("%B %d, %Y")%></h4>
+    <h4>Location: <%=@event.city%>, <%=@event.state%></h4>
+    <h4>People who are joining the event: <%=@event.attendees.count%></h4>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>City</th>
+          <th>State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%@event.users_attending.each do |user|%>
+          <tr>
+            <td><%=user.first_name%> <%=user.last_name%></td>
+            <td><%=user.city%></td>
+            <td><%=user.state%></td>
+          </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-5">
+    <h4 class="text-center">Discussions about this event</h4>
+    <div style="overflow:scroll;border:1px solid black;height:300px;padding:5px">
+      <%@event.comments.each do |comment|%>
+        <div class="comment">
+          <p><%=comment.user.first_name%> Says: <%=comment.content%></p>
+          <p>-------------</p>
+        </div>
+      <%end%>
+    </div>
+    <form action="/comments/<%=@event.id%>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <div class="form-group">
+        <label for="content">Add Comment</label>
+        <textarea class="form-control" name="content" rows="4" cols="40"></textarea>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Add Comment">
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,31 @@
+<a href="/">Events Dashboard</a>
+<h1>Edit Your Profile</h1>
+<form action="/users/<%=current_user.id%>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  <input type="hidden" name="_method" value="PATCH">
+  <div class="form-group">
+    <label for="user[first_name]">First Name</label>
+    <input class="form-control" type="text" name="user[first_name]" value="<%=current_user.first_name%>">
+  </div>
+  <div class="form-group">
+    <label for="user[last_name]">Last Name</label>
+    <input class="form-control" type="text" name="user[last_name]" value="<%=current_user.last_name%>">
+  </div>
+  <div class="form-group">
+    <label for="user[email]">Email</label>
+    <input class="form-control" type="text" name="user[email]" value="<%=current_user.email%>">
+  </div>
+  <div class="form-group">
+    <label for="user[city]">City</label>
+    <input class="form-control" type="text" name="user[city]" value="<%=current_user.city%>">
+  </div>
+  <div class="form-group">
+    <label for="user[state]">State</label>
+    <select class="form-control" name="user[state]">
+      <%@states.each do |state|%>
+        <option value="<%=state%>" <%if state == current_user.state%>selected="selected"<%end%>><%=state%></option>
+      <%end%>
+    </select>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Update Records">
+</form>
